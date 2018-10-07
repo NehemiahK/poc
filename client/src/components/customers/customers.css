@@ -1,0 +1,38 @@
+ul {
+    list-style: none;
+    padding: 0;
+    width: 30%;
+    margin: auto;
+}
+
+li{
+    font-size: 1.3rem;
+    line-height: 2rem;
+    border-bottom: 1px dotted #777;
+} 
+.singlesCard{
+    display: flex;
+    border: 1px black solid;
+    margin:10px;
+    width: 600px;
+    height: 250px;
+}
+.singlesImage{
+    height: -webkit-fill-available;
+   
+}
+.singlesImageContainer{
+    width: 250px;
+}
+.singlesCard img{
+    width:250px;
+}
+.singlesDataContainer{
+    width: 100%;
+}
+.singlesResults{
+    display: flex;
+}
+.singlesDataContainer p{
+    font-size:10px;
+}
