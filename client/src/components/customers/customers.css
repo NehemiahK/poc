@@ -1,38 +1,69 @@
-ul {
-    list-style: none;
-    padding: 0;
-    width: 30%;
-    margin: auto;
+body {
+  background-color: #FFF8F0;
+  max-width: 100%;
 }
 
-li{
-    font-size: 1.3rem;
-    line-height: 2rem;
-    border-bottom: 1px dotted #777;
-} 
-.singlesCard{
-    display: flex;
-    border: 1px black solid;
-    margin:10px;
-    width: 600px;
-    height: 250px;
+.header {
+  background-color: #92140C;
+  background: url("https://png.pngtree.com/element_pic/00/16/09/1257d6b36eebd4f.jpg") repeat;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: #111D4A;
+  flex-direction: column;
+  padding: 60px 0;
+  align-items: center;
 }
-.singlesImage{
-    height: -webkit-fill-available;
-   
+
+ul {
+  list-style: none;
+  padding: 0;
+  width: 30%;
+  margin: auto;
 }
-.singlesImageContainer{
-    width: 250px;
+
+li {
+  font-size: 1.3rem;
+  line-height: 2rem;
+  border-bottom: 1px dotted #777;
 }
-.singlesCard img{
-    width:250px;
+
+.singlesCard {
+  display: flex;
+  border: 1px black solid;
+  margin: 10px;
+  width: 600px;
+  height: 250px;
+  position: relative;
 }
-.singlesDataContainer{
-    width: 100%;
+
+.singlesImage {
+  height: -webkit-fill-available;
 }
-.singlesResults{
-    display: flex;
+
+.singlesImageContainer {
+  width: 250px;
 }
-.singlesDataContainer p{
-    font-size:10px;
+
+.singlesCard img {
+  width: 250px;
+}
+
+.singlesDataContainer {
+  width: 100%;
+}
+
+.singlesResults {
+  display: flex;
+}
+
+.singlesDataContainer p {
+  font-size: 10px;
+}
+
+#getinput {
+  max-width: 500px;
+  width: 100%;
+  height: 50px;
 }
