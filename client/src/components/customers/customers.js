@@ -49,9 +49,11 @@ class Customers extends Component {
    
     return (
       <div>
-        <h2>Customers</h2>
-        <input type="text" id="getinput"/>
-        <button onClick={this.testing}>ClickMe</button>
+        <div className="header">
+          <h2>Customers</h2>
+          <input type="text" id="getinput"/>
+          <button onClick={this.testing}>ClickMe</button>
+        </div>
         <div className='singlesResults'>
             {
                 this.state.singles.map(
