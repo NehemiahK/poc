@@ -13,6 +13,15 @@ class Customers extends Component {
     
     testing(){
         let input = document.getElementById('getinput').value;
+
+        let d = new Date();
+        let year = d.getFullYear();
+        let input2 = document.getElementById('getage').value;
+
+        let birthyear = year - input2;
+        console.log(birthyear);
+
+      
         let fetchData = {
             method: "POST", 
             headers: {
@@ -21,12 +30,13 @@ class Customers extends Component {
             },
             body: JSON.stringify({
                 first_name:input,
-                gender:"male"        
+                gender:"male",
+                'dob <=':'2015-02-04'       
             }), 
             }
             fetch('/api/test',fetchData)
             .then(response => response.json())
-            .then(singles => this.setState({singles: singles}, () => console.log('customers fetched..',singles)));
+            .then(singles => this.setState({singles: singles}, () => console.log('singles fetched..',singles)));
     }
 
     componentDidMount() {
@@ -51,6 +61,7 @@ class Customers extends Component {
       <div>
         <h2>Customers</h2>
         <input type="text" id="getinput"/>
+        <input type="number" id="getage"/>
         <button onClick={this.testing}>ClickMe</button>
         <div className='singlesResults'>
             {
