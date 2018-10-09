@@ -1,27 +1,34 @@
 import React, { Component } from 'react';
 import './customers.css';
 
-const singleImages = '../';
 class Customers extends Component {
     constructor(){
         super();
         this.state = {
             singles:[]
         }
-        this.testing = this.testing.bind(this);
+        this.prepareSingleData = this.prepareSingleData.bind(this);
     }
     
-    testing(){
-        let input = document.getElementById('getinput').value;
-
+    getMinAndMaxAge(){
         let d = new Date();
+        let day = d.getDate();
+        let month = d.getMonth();
         let year = d.getFullYear();
-        let input2 = document.getElementById('getage').value;
+        let input2 = document.getElementById('getMinAge').value;
+        let input3 = document.getElementById('getMaxAge').value;
+        let minBirthyear = year - input2;
+        let maxBirthyear = year - input3;
+        let minAge = minBirthyear + '-' + (month + 1) + '-' + day;
+        let maxAge = (maxBirthyear - 1) +   '-' + (month  - 1) + '-' + (day + 1);
 
-        let birthyear = year - input2;
-        console.log(birthyear);
+        return [minAge,maxAge];
+    }
 
-      
+    prepareSingleData(){
+        let input = document.getElementById('getinput').value; //name for now 
+        let [minAge, maxAge] = this.getMinAndMaxAge();
+
         let fetchData = {
             method: "POST", 
             headers: {
@@ -31,18 +38,19 @@ class Customers extends Component {
             body: JSON.stringify({
                 first_name:input,
                 gender:"male",
-                'dob <=':'2015-02-04'       
-            }), 
-            }
+                'dob >=': maxAge,
+                'dob <=': minAge      
+            }) 
+            };
+
+        this.sendSingle(fetchData);
+    }
+
+    sendSingle(fetchData){
             fetch('/api/test',fetchData)
             .then(response => response.json())
             .then(singles => this.setState({singles: singles}, () => console.log('singles fetched..',singles)));
     }
-
-    componentDidMount() {
-       
-    }
-
     
 
   render() {
@@ -60,9 +68,11 @@ class Customers extends Component {
     return (
       <div>
         <div className="header">
-          <h2>Customers</h2>
+          <h2>Singles</h2>
           <input type="text" id="getinput"/>
-          <button onClick={this.testing}>ClickMe</button>
+          <input type="number" id="getMinAge"/>
+          <input type="number" id="getMaxAge"/>
+          <button onClick={this.prepareSingleData}>ClickMe</button>
         </div>
         <div className='singlesResults'>
             {
