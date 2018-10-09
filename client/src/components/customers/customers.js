@@ -47,7 +47,7 @@ class Customers extends Component {
     }
 
     sendSingle(fetchData){
-            fetch('/api/test',fetchData)
+            fetch('/api/singles',fetchData)
             .then(response => response.json())
             .then(singles => this.setState({singles: singles}, () => console.log('singles fetched..',singles)));
     }
