@@ -15,3 +15,5 @@ in the server.js file change the password to match your mysql password
 
 # Run the client & server with concurrently
 npm run dev
+
+Testing
