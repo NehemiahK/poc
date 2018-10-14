@@ -1,0 +1,33 @@
+  .singlesCard {
+    display: flex;
+    border: 1px black solid;
+    margin: 10px;
+    width: 600px;
+    height: 250px;
+    position: relative;
+  }
+  
+  .singlesImage {
+    height: -webkit-fill-available;
+  }
+  
+  .singlesImageContainer {
+    width: 250px;
+  }
+  
+  .singlesCard img {
+    width: 250px;
+  }
+  
+  .singlesDataContainer {
+    width: 100%;
+  }
+  
+  .singlesResults {
+    display: flex;
+  }
+  
+  .singlesDataContainer p {
+    font-size: 10px;
+  }
+  
