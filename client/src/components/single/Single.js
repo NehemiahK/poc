@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './singlecard.css';
-//import Customers from './components/customers/customers';
 
 class SingleCard extends Component {
     
