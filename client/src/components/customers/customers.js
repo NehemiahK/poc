@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './customers.css';
+import axios from 'axios';
+
 import SingleCard from '../single/Single.js';
 
 class Customers extends Component {
@@ -31,28 +33,27 @@ class Customers extends Component {
         let [minAge, maxAge] = this.getMinAndMaxAge();
 
         let fetchData = {
-            method: "POST", 
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                "Accept": "application/json;",
-            },
-            body: JSON.stringify({
                 first_name:input,
                 gender:"male",
                 'dob >=': maxAge,
                 'dob <=': minAge      
-            }) 
-            };
+            }
+          
 
         this.sendSingle(fetchData);
     }
 
-    sendSingle(fetchData){
-            fetch('/api/singles',fetchData)
-            .then(response => response.json())
-            .then(singles => this.setState({singles: singles}, () => console.log('singles fetched..',singles)));
+    sendSingle(params){
+        axios.get('/api/singles/', {params})
+        .then((response) => {
+            console.log(response);
+            this.setState({singles: response.data})
+          })
+         .catch((error)=>{
+            console.log(error);
+         });
+ 
     }
-    
 
   render() {
  

@@ -20,10 +20,10 @@ app.use(bodyParser.json());
 const qb = require('node-querybuilder').QueryBuilder(settings);
 
 //a POST api that reads the body of the request and returns matching singles
-app.post('/api/singles',jsonParser, (req,res) => {
-  console.log(req.body);
+app.get('/api/singles/', (req,res) => {
+  //console.log(req.query);
     qb.select('*')
-        .where(req.body)
+        .where(req.query)
         .get('singles', (err,response) => {
             res.json(response);
             //qb.disconnect();
