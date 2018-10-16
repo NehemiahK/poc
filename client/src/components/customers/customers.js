@@ -35,8 +35,8 @@ class Customers extends Component {
         let fetchData = {
                 first_name:input,
                 gender:"male",
-                'dob >=': maxAge,
-                'dob <=': minAge      
+                 maxAge,
+                 minAge      
             }
           
 

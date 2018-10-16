@@ -22,8 +22,30 @@ const qb = require('node-querybuilder').QueryBuilder(settings);
 //a POST api that reads the body of the request and returns matching singles
 app.get('/api/singles/', (req,res) => {
   //console.log(req.query);
+
+  //building the query based on paramaters sent in. 
+  const singleQuery = {}; 
+
+  let request = Object.entries(req.query);
+
+  for (let param of request){
+      let singleKey = param[0];
+      let singleVal = param[1];
+
+      if (singleKey == "maxAge"){
+        singleKey = "dob >=";
+      }
+      if (singleKey == "minAge"){
+          singleKey = "dob <=";
+      }
+      singleQuery[singleKey] = singleVal;
+
+  }
+
+  //console.log(singleQuery);
+
     qb.select('*')
-        .where(req.query)
+        .where(singleQuery)
         .get('singles', (err,response) => {
             res.json(response);
             //qb.disconnect();
