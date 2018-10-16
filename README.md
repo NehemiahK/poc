@@ -1,7 +1,7 @@
 # poc
 
 - You will need to download node if you haven't yet. 
-- You will need to download mysql if you haven't yet. (Checkout the setupdb.md file)
+- You will need to download mysql if you haven't yet. Checkout the [poc/blob/master/setupdb.md](setupdb.md) file
 - You will need to get the current sql insert (ask me for it)
 
 # Install dependencies for server
