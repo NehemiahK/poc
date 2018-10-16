@@ -32,6 +32,23 @@ class Customers extends Component {
         let input = document.getElementById('getinput').value; //name for now 
         let [minAge, maxAge] = this.getMinAndMaxAge();
 
+
+    //     let fetchData = {
+    //         method: "POST", 
+    //         headers: {
+    //             "Content-Type": "application/json; charset=utf-8",
+    //             "Accept": "application/json;",
+    //         },
+    //         body: JSON.stringify({
+    //             first_name:input,
+    //             gender:"male"        
+    //         }), 
+    //         }
+    //         fetch('/api/test',fetchData)
+    //         .then(response => response.json())
+    //         .then(singles => this.setState({singles: singles}, () => console.log('customers fetched..',singles)));
+    // }
+
         let fetchData = {
                 first_name:input,
                 gender:"male",
@@ -44,14 +61,21 @@ class Customers extends Component {
     }
 
     sendSingle(params){
-        axios.get('/api/singles/', {params})
-        .then((response) => {
-            console.log(response);
-            this.setState({singles: response.data})
-          })
-         .catch((error)=>{
-            console.log(error);
-         });
+          // params = {first_name:input,gender:"male",maxAge,minAge}
+        const url = new URL("http://localhost/api/singles");
+        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+        let fetchUrl = url.pathname + url.search;
+        fetch(fetchUrl)
+        .then(response => response.json())
+        .then(singles => this.setState({singles: singles}, () => console.log('customers fetched..',singles)));
+        // axios.get('/api/singles/', {params})
+        // .then((response) => {
+        //     console.log(response);
+        //     this.setState({singles: response.data})
+        //   })
+        //  .catch((error)=>{
+        //     console.log(error);
+        //  });
  
     }
 
