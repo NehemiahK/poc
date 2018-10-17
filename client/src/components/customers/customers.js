@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './customers.css';
-import axios from 'axios';
 
 import SingleCard from '../single/Single.js';
 
@@ -8,9 +7,16 @@ class Customers extends Component {
     constructor(){
         super();
         this.state = {
-            singles:[]
+            singles:[],
+            showAge:false,
+            showName:false
         }
         this.prepareSingleData = this.prepareSingleData.bind(this);
+        this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+    }
+
+    handleCheckBoxChange(event){        
+       this.setState({[event.target.value]: event.target.checked})
     }
     
     getMinAndMaxAge(){
@@ -32,23 +38,6 @@ class Customers extends Component {
         let input = document.getElementById('getinput').value; //name for now 
         let [minAge, maxAge] = this.getMinAndMaxAge();
 
-
-    //     let fetchData = {
-    //         method: "POST", 
-    //         headers: {
-    //             "Content-Type": "application/json; charset=utf-8",
-    //             "Accept": "application/json;",
-    //         },
-    //         body: JSON.stringify({
-    //             first_name:input,
-    //             gender:"male"        
-    //         }), 
-    //         }
-    //         fetch('/api/test',fetchData)
-    //         .then(response => response.json())
-    //         .then(singles => this.setState({singles: singles}, () => console.log('customers fetched..',singles)));
-    // }
-
         let fetchData = {
                 first_name:input,
                 gender:"male",
@@ -61,22 +50,13 @@ class Customers extends Component {
     }
 
     sendSingle(params){
-          // params = {first_name:input,gender:"male",maxAge,minAge}
+        //URL needed an http://url which is why I had to chop up the URL
         const url = new URL("http://localhost/api/singles");
         Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
         let fetchUrl = url.pathname + url.search;
         fetch(fetchUrl)
         .then(response => response.json())
         .then(singles => this.setState({singles: singles}, () => console.log('customers fetched..',singles)));
-        // axios.get('/api/singles/', {params})
-        // .then((response) => {
-        //     console.log(response);
-        //     this.setState({singles: response.data})
-        //   })
-        //  .catch((error)=>{
-        //     console.log(error);
-        //  });
- 
     }
 
   render() {
@@ -86,9 +66,23 @@ class Customers extends Component {
       <div>
         <div className="header">
           <h2>Singles</h2>
-          <input type="text" id="getinput"/>
-          <input type="number" id="getMinAge"/>
-          <input type="number" id="getMaxAge"/>
+          <div>
+              Age <input type="checkbox" name="age" value="showAge" onChange = {this.handleCheckBoxChange}/>
+          </div>
+          
+          <div>
+              Name <input type="checkbox" name="name" value="showName" onChange = {this.handleCheckBoxChange}/>
+          </div>
+         
+
+          { this.state.showName && <input type="text" id="getinput"/> }
+          { this.state.showAge && 
+          <div>
+            <input type="number" id="getMinAge" placeholder="Min Age"/>
+            <input type="number" id="getMaxAge" placeholder="Max Age"/>    
+          </div> }
+
+        
           <button onClick={this.prepareSingleData}>ClickMe</button>
         </div>
         <div className='singlesResults'>
