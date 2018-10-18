@@ -9,14 +9,20 @@ class Customers extends Component {
         this.state = {
             singles:[],
             showAge:false,
-            showName:false
+            showName:false,
+          
         }
         this.prepareSingleData = this.prepareSingleData.bind(this);
         this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+        this.handleAgeChange = this.handleAgeChange.bind(this);
     }
 
     handleCheckBoxChange(event){        
        this.setState({[event.target.value]: event.target.checked})
+    }
+
+    handleAgeChange(event){
+        this.setState({[event.target.name]:event.target.value});
     }
     
     getMinAndMaxAge(){
@@ -24,8 +30,10 @@ class Customers extends Component {
         let day = d.getDate();
         let month = d.getMonth();
         let year = d.getFullYear();
-        let input2 = document.getElementById('getMinAge').value;
-        let input3 = document.getElementById('getMaxAge').value;
+        
+      
+        let input2 = this.state.minAge;
+        let input3 = this.state.maxAge;
         let minBirthyear = year - input2;
         let maxBirthyear = year - input3;
         let minAge = minBirthyear + '-' + (month + 1) + '-' + day;
@@ -78,8 +86,8 @@ class Customers extends Component {
           { this.state.showName && <input type="text" id="getinput"/> }
           { this.state.showAge && 
           <div>
-            <input type="number" id="getMinAge" placeholder="Min Age"/>
-            <input type="number" id="getMaxAge" placeholder="Max Age"/>    
+            <input type="number" name="minAge" value={this.state.minAge} placeholder="Min Age" onChange={this.handleAgeChange}/>
+            <input type="number" name="maxAge" value={this.state.maxAge} placeholder="Max Age" onChange={this.handleAgeChange}/>    
           </div> }
 
         
