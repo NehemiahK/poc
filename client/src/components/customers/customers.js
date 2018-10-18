@@ -2,61 +2,109 @@ import React, { Component } from 'react';
 import './customers.css';
 
 import SingleCard from '../single/Single.js';
+import DynamicInput from '../inputs/DynamicInput';
 
 class Customers extends Component {
     constructor(){
         super();
         this.state = {
             singles:[],
+            searchoptions:["age","name","gender"],
+            selectedoptions:[],
             showAge:false,
             showName:false,
+            comps:[],
+            minAge:'',
+            maxAge:'',
+            firstName:"",
+            gender:""
           
         }
         this.prepareSingleData = this.prepareSingleData.bind(this);
-        this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
-        this.handleAgeChange = this.handleAgeChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleRemove = this.handleRemove.bind(this);
     }
 
-    handleCheckBoxChange(event){        
-       this.setState({[event.target.value]: event.target.checked})
+    handleClick(event){
+        if (this.state.selectedoptions.includes(event.target.value)){
+            return;
+        }
+        this.setState(
+            {
+                comps:[...this.state.comps, event.target.value],
+                selectedoptions:[...this.state.selectedoptions,event.target.value] 
+            });
     }
 
-    handleAgeChange(event){
+    handleChange(event){
         this.setState({[event.target.name]:event.target.value});
     }
-    
-    getMinAndMaxAge(){
-        let d = new Date();
-        let day = d.getDate();
-        let month = d.getMonth();
-        let year = d.getFullYear();
-        
-      
-        let input2 = this.state.minAge;
-        let input3 = this.state.maxAge;
-        let minBirthyear = year - input2;
-        let maxBirthyear = year - input3;
-        let minAge = minBirthyear + '-' + (month + 1) + '-' + day;
-        let maxAge = (maxBirthyear - 1) +   '-' + (month  - 1) + '-' + (day + 1);
 
-        return [minAge,maxAge];
+    handleRemove(event){
+        this.setState({
+            comps: this.state.comps.filter((comp) => comp !== event.target.name),
+            selectedoptions: this.state.selectedoptions.filter((option) => option !== event.target.name)
+            
+        })
+        
     }
 
+  
     prepareSingleData(){
-        let input = document.getElementById('getinput').value; //name for now 
-        let [minAge, maxAge] = this.getMinAndMaxAge();
+        let first_name = this.state.firstName;
+        let gender = this.state.gender;
+        let minAge = this.state.minAge;
+        let maxAge = this.state.maxAge;
 
         let fetchData = {
-                first_name:input,
-                gender:"male",
+                first_name,
+                 gender,
                  maxAge,
                  minAge      
             }
           
+        this.setState({
+            firstName:'',
+            gender:'',
+            minAge:'',
+            maxAge:''
+        });
 
         this.sendSingle(fetchData);
     }
+        
+    handleComp(el){
+        if(el === "age"){
+            return (<div key={el} className="ageinputs rule">
+                <button className="ex" onClick={this.handleRemove} name={el}> x </button>
+                Age:
+                <input type="number" name="minAge" value={this.state.minAge} placeholder="Min Age" onChange={this.handleChange}/>
+                <span>to:</span>
+                <input type="number" name="maxAge" value={this.state.maxAge} placeholder="Max Age" onChange={this.handleChange}/>    
+              </div>);
+        }
 
+        if (el==="name"){
+        return (<div key ={el} className="nameinputs rule">
+            <button className="ex" onClick={this.handleRemove} name={el}> x </button>
+            Name:
+        <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleChange} placeholder="first name"/>
+        </div>
+    );
+        }
+
+        if(el==="gender"){
+            return (<div key ={el} className="genderinputs rule">
+                <button className="ex" onClick={this.handleRemove} name={el}> x </button>
+                Gender:
+            <input type="text" name="gender" value={this.state.gender} onChange={this.handleChange} placeholder="gender"/>
+            </div>
+        );
+        }
+        
+    };
+ 
     sendSingle(params){
         //URL needed an http://url which is why I had to chop up the URL
         const url = new URL("http://localhost/api/singles");
@@ -64,34 +112,29 @@ class Customers extends Component {
         let fetchUrl = url.pathname + url.search;
         fetch(fetchUrl)
         .then(response => response.json())
-        .then(singles => this.setState({singles: singles}, () => console.log('customers fetched..',singles)));
+        .then(singles => this.setState({singles: singles}, () => console.log('singles fetched..',singles)));
     }
 
   render() {
- 
+
+    
    
     return (
       <div>
         <div className="header">
           <h2>Singles</h2>
-          <div>
-              Age <input type="checkbox" name="age" value="showAge" onChange = {this.handleCheckBoxChange}/>
-          </div>
-          
-          <div>
-              Name <input type="checkbox" name="name" value="showName" onChange = {this.handleCheckBoxChange}/>
-          </div>
-         
-
-          { this.state.showName && <input type="text" id="getinput"/> }
-          { this.state.showAge && 
-          <div>
-            <input type="number" name="minAge" value={this.state.minAge} placeholder="Min Age" onChange={this.handleAgeChange}/>
-            <input type="number" name="maxAge" value={this.state.maxAge} placeholder="Max Age" onChange={this.handleAgeChange}/>    
-          </div> }
-
+          <div className="ruleOptions">
         
-          <button onClick={this.prepareSingleData}>ClickMe</button>
+         { this.state.searchoptions.map((option) => <button key={option} value={option} onClick={this.handleClick} 
+         style={{backgroundColor: this.state.selectedoptions.includes(option) ? "grey" : "blue" }}
+         > {option} </button>) }
+             
+             <button className="searchbutton" onClick={this.prepareSingleData}>Search</button>
+          </div>
+                
+         { this.state.comps.map((el) => this.handleComp(el))  }
+          
+          
         </div>
         <div className='singlesResults'>
         {

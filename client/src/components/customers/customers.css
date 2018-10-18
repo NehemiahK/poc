@@ -16,8 +16,30 @@ body {
   align-items: center;
 }
 
-#getinput {
-  max-width: 500px;
-  width: 100%;
-  height: 50px;
+
+.ageinputs input{
+  width:70px;
+}
+.nameinputs input{
+  width:150px;
+}
+.rule{
+  margin: 7px;
+  background: #d6d5d5;
+  padding: 10px 50px;
+}
+.ruleOptions button{
+  margin: 0px 10px;
+  font-size: 16px;
+  background: blue;
+  border-radius: 12px;
+  padding: 2px 20px;
+  width: 100px;
+  color:white;
+}
+button.searchbutton{
+  background:#e4601f;
+}
+.ex{
+  color:red;
 }
